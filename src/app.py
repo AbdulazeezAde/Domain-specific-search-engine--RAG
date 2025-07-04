@@ -1,5 +1,6 @@
 import streamlit as st
 from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
@@ -38,7 +39,7 @@ def chunk_data(data, chunk_size=256, chunk_overlap=20):
 
 
 def create_embeddings(chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     vector_store = FAISS.from_documents(chunks, embeddings)
     return vector_store
 
